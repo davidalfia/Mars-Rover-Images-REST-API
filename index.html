@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+      rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+      crossorigin="anonymous">
+<script src="js/myfunctions.js"></script>
+<title>Exercise 3 - Internet Programming Course template</title>
+</head>
+<body>
+
+<div class="container">
+    <div class="text-center mb-4">
+        <div class="card">
+            <img class="img-fluid" src="images/marsPic.jpg" style="width: 1500em" alt="mars Pic">
+            <div class="card-img-overlay text-white text-center">
+                <div class="card-body">
+                    <div class="card-header text-black" style="background-color: white;">
+                        <h1 class="card-title">Mars images browser</h1>
+                        <p class="card-text">Browse Nasa Mars images and save your preferred ones. </p>
+                        <button class="bg-primary bg-opacity-50" data-bs-toggle="modal" data-bs-target="#modalDialog">Who am I</button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="modalDialog" tabindex="-1" aria-labelledby="modalLabel">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-primary bg-opacity-50">
+                                            <h5 class="modal-title" id="modalLabel">Who Am I</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body text-start">
+                                        David Alfia <br>
+                                        <a href="davidal@edu.hac.ac.il">davidal@edu.hac.ac.il</a>
+                                    </div>
+                                    <div class="modal-footer ">
+                                        <div style="text-align:center" class="container-fluid">
+                                            <button type="button" class="btn btn-primary bg-primary bg-opacity-50" data-bs-dismiss="modal">Ok</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <div class="mt-3 p-3 m-2">
+                <h3 class="bg-primary bg-opacity-25 text-primary text-muted p-3 mb-2">search for img:</h3>
+                    <form id="search-Images-Form">
+                    <div class="mb-3">
+                        <label for="date-text-input" class="form-label">chose data (YYYY-MM-DD) or sol </label>
+                        <input type="text-default" class="form-control" autocomplete="off" id="date-text-input">
+                        <div class="text-danger errormessage"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="rover-select-input" class="form-label">select rover</label>
+                        <select class="form-select" id="rover-select-input" aria-label="Default select`">
+                            <option selected value="" >choose a rover</option>
+                            <option>curiosity</option>
+                            <option>opportunity</option>
+                            <option>spirit</option>
+                        </select>
+                        <div class="text-danger errormessage"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="camera-select-input" class="form-label">select camera</label>
+                        <select class="form-select"  id="camera-select-input" aria-label="Default select">
+                            <option selected value="">choose a camera</option>
+                            <option>FHAZ</option>
+                            <option>RHAZ</option>
+                            <option>MAST</option>
+                            <option>CHEMCAM</option>
+                            <option>MAHLI</option>
+                            <option>NAVCAM</option>
+                            <option>PANCAM</option>
+                            <option>MINITES</option>
+                        </select>
+                        <div class="text-danger errormessage"></div>
+                    </div>
+                    <button type="button" id="button-submit"  class="btn btn-default btn-outline-secondary togglevisible">Search</button>
+                    <button type="reset" id="clear-button" class="btn btn-default btn-outline-secondary togglevisible">clear</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-md-6 col-lg-6">
+            <div class="mt-3 p-3 m-2">
+                <h3 class="bg-primary bg-opacity-25 text-primary text-muted p-3 mb-2">saved img:</h3>
+                <ul id="saved-img-list"></ul>
+                <ol id="data"></ol>
+            </div>
+        </div>
+</div>
+
+<div class="container-fluid pt-4">
+    <h2 class="bg-primary bg-opacity-50 p-3 mb-3 text-muted text-center">search result:</h2>
+    <div class="row" id="imgResult"></div>
+</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+            crossorigin="anonymous"></script>
+</body>
+</html>
