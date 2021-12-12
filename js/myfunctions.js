@@ -55,7 +55,7 @@ const validatorModule = (function () {
      */
     const isNotEmpty = function (str) {
         return {
-            isValid: (str.length !== 0), message: 'please enter input'
+            isValid: (str.length !== 0), message: 'input is required here'
         };
     }
     validObj.isNotEmpty = isNotEmpty
@@ -67,6 +67,7 @@ const validatorModule = (function () {
      */
     const isDateValid = function (datesVec)
     {
+        console.log(datesVec);
         let date = datesVec.date;
         let landingDate = datesVec.ld;
         let maxEarthDate = datesVec.md;
@@ -81,16 +82,17 @@ const validatorModule = (function () {
         //the compare work dua to the use of Date built in date in js
         if(date < landingDate)
         {
+            console.log(`landing date: ${landingDate}`)
             return{
                 isValid: false,
-                message: `date must be after ${landingDate}`
+                message: `the mission you've selected requires a date after ${landingDate.toDateString()}`
             }
         }
 
         else if(date > maxEarthDate){
             return{
                 isValid: false,
-                message: `date must be after ${maxEarthDate}`
+                message: `the mission you've selected requires a date before ${maxEarthDate.toDateString()}`
             }
         }
         else{
@@ -110,7 +112,7 @@ const validatorModule = (function () {
     const validDate = function (str) {
         return {
             isValid: /^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/.test(str) || /^[1-9][0-9]*$/.test(str),
-            message: 'text must be a date or a sol'
+            message: 'please enter a SOL number or a valid date'
         };
     }
     validObj.validate = validDate
@@ -123,18 +125,17 @@ const validatorModule = (function () {
      */
     const isSolValid = function (solVec)
     {
-        console.log(solVec.rover);
         if(solVec.rover === ""){
             return{
                 isValid: false,
-                message: 'rover has not selected'
+                message: 'rover still has not been selected'
             }
         }
 
         if(solVec.sol < 0 || solVec.sol > solVec.maxSol){
             return{
                 isValid: false,
-                message:`sol must be under max sol: ${solVec[1]}`
+                message:`the mission you've selected requires a sol under: ${solVec.maxSol}`
             }
         }
         else {
@@ -354,16 +355,19 @@ const validatorModule = (function () {
      * @param dateTextInput
      * @param roverSelectInput
      * @param cameraSelectInput
+     * first validation: textInput validation, include empty, valid chars, date matches manifest data
+     * second validation: roverSelectInput empty check
+     * second validation: cameraSelectInput empty check
      * @returns {*}
      */
     const validateForm = (dateTextInput, roverSelectInput, cameraSelectInput) => {
         let v1 = validateInput(dateTextInput,validatorModule.isNotEmpty,dateTextInput.value.trim()) &&validateInput(dateTextInput,validatorModule.validDate,dateTextInput.value.trim())
             && ((checkIfDateOrSol(dateTextInput.value) === "date"  ) ?
                 validateInput(dateTextInput,validatorModule.isDateValid,buildDateVec(dateTextInput.value,
-                        validList.get(roverSelectInput.value).landingDate,
-                        validList.get(roverSelectInput.value).maxDate)) :
+                    validList.get(roverSelectInput.value).landingDate,
+                    validList.get(roverSelectInput.value).maxDate)) :
                 validateInput(dateTextInput,validatorModule.isSolValid,buildSolVec(dateTextInput.value,
-                                                                                    validList.get(roverSelectInput.value).maxSol)));
+                    validList.get(roverSelectInput.value).maxSol)));
         let v3 = validateInput(roverSelectInput,validatorModule.isNotEmpty,roverSelectInput.value);
         let v4 = validateInput(cameraSelectInput,validatorModule.isNotEmpty,cameraSelectInput.value);
         let v = v1 && v3 && v4;
@@ -427,7 +431,7 @@ const validatorModule = (function () {
             saveImgList.append(document.createElement('div').innerText = cardData);
         }
         else{
-            alert("alredy there")
+            alert("the image is already saved!");
         }
     }
 
@@ -465,7 +469,7 @@ const validatorModule = (function () {
             }
             else {
                 document.querySelector("#data").innerHTML = "";
-                divDisplayImgResult.innerHTML = `<div class="bg-danger bg-opacity-25 p-3 m-3 text-center"><h4>
+                divDisplayImgResult.innerHTML = `<div class="bg-success bg-opacity-25 p-3 m-3 text-center"><h4>
                try a different combination
                </h4></div>`
             }
@@ -507,6 +511,7 @@ const validatorModule = (function () {
     //main DOMContentLoaded event
     document.addEventListener('DOMContentLoaded', function ()
     {
+
         //initial all dom users = cache
         dateTextInput = document.getElementById("date-text-input");
         roverSelectInput = document.getElementById("rover-select-input");
